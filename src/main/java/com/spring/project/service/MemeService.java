@@ -8,6 +8,6 @@ public interface MemeService {
     void addMeme(Meme meme);
     void updateMeme(Meme meme);
     void removeMeme(long id);
-    void getMemeById(long id);
+    Meme getMemeById(long id);
     List<Meme> listMemes();
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class MemeServiceImpl implements MemeService {
-    @Autowired
+
     private MemeDao memeDao;
 
     public void setMemeDao(MemeDao memeDao) {
@@ -38,8 +38,8 @@ public class MemeServiceImpl implements MemeService {
 
     @Override
     @Transactional
-    public void getMemeById(long id) {
-        this.memeDao.getOne(id);
+    public Meme getMemeById(long id) {
+        return this.memeDao.findOne(id);
     }
 
     @Override

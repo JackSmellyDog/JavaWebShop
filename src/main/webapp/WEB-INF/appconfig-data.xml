@@ -31,6 +31,11 @@
         </property>
     </bean>
 
+
+    <bean id="memeService" class="com.spring.project.service.MemeServiceImpl">
+        <property name="memeDao" ref="memeDao"/>
+    </bean>
+
     <bean id="transactionManager"
           class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>

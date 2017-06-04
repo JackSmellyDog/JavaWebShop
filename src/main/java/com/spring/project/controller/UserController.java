@@ -1,14 +1,19 @@
 package com.spring.project.controller;
 
+import com.spring.project.model.Meme;
 import com.spring.project.model.User;
+import com.spring.project.service.MemeService;
 import com.spring.project.service.SecurityService;
 import com.spring.project.service.UserService;
 import com.spring.project.validator.UserValidator;
+import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,6 +28,61 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+
+    // Meme
+
+    private MemeService memeService;
+
+    @Autowired(required = true)
+    @Qualifier(value = "memeService")
+    public void setMemeService(MemeService memeService) {
+        this.memeService = memeService;
+    }
+
+    @RequestMapping(value = "memes", method = RequestMethod.GET)
+    public String listMemes(Model model){
+        model.addAttribute("meme", new Meme());
+        model.addAttribute("listMemes", this.memeService.listMemes());
+
+        return "memes";
+    }
+
+    @RequestMapping(value = "/memes/add", method = RequestMethod.POST)
+    public String addMeme(@ModelAttribute("meme") Meme meme){
+        if (meme.getId() == null){
+            this.memeService.addMeme(meme);
+        } else {
+            this.memeService.updateMeme(meme);
+        }
+
+        return "redirect:/memes";
+    }
+
+    @RequestMapping(value = "/remove/{id}")
+    public String removeMeme(@PathVariable(value = "id") long id){
+        this.memeService.removeMeme(id);
+
+        return "redirect:/memes";
+    }
+
+    @RequestMapping(value = "/edit/{id}")
+    public String editMeme(@PathVariable(value = "id") long id, Model model){
+        model.addAttribute("meme", this.memeService.getMemeById(id));
+        model.addAttribute("listMemes", this.memeService.listMemes());
+
+        return "memes";
+    }
+
+    @RequestMapping(value = "memedata/{id}")
+    public String memeData(@PathVariable(value = "id") long id, Model model){
+        model.addAttribute("meme", this.memeService.getMemeById(id));
+
+        return "memedata";
+    }
+
+
+    // End meme
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model){
