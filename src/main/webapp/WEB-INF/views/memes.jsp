@@ -128,7 +128,8 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="memeImgLink" cssClass="form-control"/>
+                <%--<form:input path="memeImgLink" cssClass="form-control"/>--%>
+                    <form:input type="file" path="memeImgLink" name="file"  />
             </td>
         </tr>
         <tr>

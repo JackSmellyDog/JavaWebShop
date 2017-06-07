@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class UserController {
@@ -48,15 +46,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/memes/add", method = RequestMethod.POST)
-    public String addMeme(@ModelAttribute("meme") Meme meme){
-        if (meme.getId() == null){
+    public String addMeme(@ModelAttribute("meme") Meme meme) {
+        if (meme.getId() == null) {
+            meme.setMemeImgLink("123.png");
             this.memeService.addMeme(meme);
+
         } else {
             this.memeService.updateMeme(meme);
         }
-
         return "redirect:/memes";
     }
+
 
     @RequestMapping(value = "/remove/{id}")
     public String removeMeme(@PathVariable(value = "id") long id){
