@@ -6,9 +6,9 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Memes Page</title>
-
+    <title>Users Page</title>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+
     <style type="text/css">
         .tg {
             border-collapse: collapse;
@@ -54,41 +54,37 @@
 <br/>
 <br/>
 
-<h1>Meme List</h1>
+<h1>User List</h1>
 
-<c:if test="${!empty listMemes}">
+<c:if test="${!empty listUsers}">
     <table class="tg">
         <tr>
             <th width="80">ID</th>
-            <th width="120">Title</th>
-            <th width="240">Description</th>
-            <th width="120">Author</th>
-            <th width="120">Price</th>
+            <th width="120">Name</th>
+            <th width="120">Phone</th>
             <th width="60">Edit</th>
             <th width="60">Delete</th>
         </tr>
-        <c:forEach items="${listMemes}" var="meme">
-            <tr>
-                <td>${meme.id}</td>
-                <td><a href="/memedata/${meme.id}" target="_blank">${meme.memeTitle}</a></td>
-                <td>${meme.memeDescription}</td>
-                <td>${meme.memeAuthor}</td>
-                <td>${meme.memePrice}</td>
-                <td><a href="<c:url value='/edit/${meme.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/remove/${meme.id}'/>">Delete</a></td>
-            </tr>
+        <c:forEach items="${listUsers}" var="user">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.phone}</td>
+                    <td><a href="<c:url value='/u/edit/${user.id}'/>">Edit</a></td>
+                    <td><a href="<c:url value='/u/remove/${user.id}'/>">Delete</a></td>
+                </tr>
         </c:forEach>
     </table>
 </c:if>
 
 
-<h1>Add a Meme</h1>
+<h1>Add a User</h1>
 
-<c:url var="addAction" value="/memes/add"/>
+<c:url var="addAction" value="/users/add"/>
 
-<form:form action="${addAction}" commandName="meme">
+<form:form action="${addAction}" commandName="user">
     <table>
-        <c:if test="${!empty meme.memeTitle}">
+        <c:if test="${!empty user.username}">
             <tr>
                 <td>
                     <form:label path="id">
@@ -96,70 +92,51 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="id" readonly="true" size="8" disabled="true"/>
+                    <form:input path="id" readonly="true" size="8" disabled="true" cssClass="form-control"/>
                     <form:hidden path="id"/>
                 </td>
             </tr>
         </c:if>
         <tr>
             <td>
-                <form:label path="memeTitle">
-                    <spring:message text="Title"/>
+                <form:label path="username" >
+                    <spring:message text="Username"/>
                 </form:label>
             </td>
             <td>
-                <form:input path="memeTitle" cssClass="form-control"/>
+                <form:input path="username" cssClass="form-control"/>
             </td>
         </tr>
         <tr>
             <td>
-                <form:label path="memeDescription">
-                    <spring:message text="Description"/>
+                <form:label path="phone">
+                    <spring:message text="Phone"/>
                 </form:label>
             </td>
             <td>
-                <form:textarea path="memeDescription" cssClass="form-control"/>
+                <form:input path="phone" cssClass="form-control"/>
             </td>
         </tr>
         <tr>
             <td>
-                <form:label path="memeImgLink">
-                    <spring:message text="Img"/>
+                <form:label path="password">
+                    <spring:message text="Password"/>
                 </form:label>
             </td>
             <td>
-                <form:input path="memeImgLink" cssClass="form-control"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="memeAuthor">
-                    <spring:message text="Author"/>
-                </form:label>
-            </td>
-            <td>
-                <form:input path="memeAuthor" cssClass="form-control"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="memePrice">
-                    <spring:message text="Price" />
-                </form:label>
-            </td>
-            <td>
-                <form:input path="memePrice" cssClass="form-control"/>
+                <form:input path="password" cssClass="form-control"/>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <c:if test="${!empty meme.memeTitle}">
+                <c:if test="${!empty user.username}">
+                    <br>
                     <input type="submit" class="btn btn-lg btn-primary btn-block"
-                           value="<spring:message text="Edit Meme"/>"/>
+                           value="<spring:message text="Edit User"/>"/>
                 </c:if>
-                <c:if test="${empty meme.memeTitle}">
+                <c:if test="${empty user.username}">
                     <input type="submit" class="btn btn-lg btn-primary btn-block"
-                           value="<spring:message text="Add Meme"/>"/>
+                           value="<spring:message text="Add User"/>"/>
                 </c:if>
             </td>
         </tr>

@@ -6,7 +6,6 @@ import com.spring.project.service.MemeService;
 import com.spring.project.service.SecurityService;
 import com.spring.project.service.UserService;
 import com.spring.project.validator.UserValidator;
-import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -40,7 +39,7 @@ public class UserController {
         this.memeService = memeService;
     }
 
-    @RequestMapping(value = "memes", method = RequestMethod.GET)
+    @RequestMapping(value = "/memes", method = RequestMethod.GET)
     public String listMemes(Model model){
         model.addAttribute("meme", new Meme());
         model.addAttribute("listMemes", this.memeService.listMemes());
@@ -81,11 +80,59 @@ public class UserController {
         return "memedata";
     }
 
+    @RequestMapping(value = "buy/{id}")
+    public String buy(@PathVariable(value = "id") long id, Model model){
+        model.addAttribute("meme", this.memeService.getMemeById(id));
+
+        return "buy";
+    }
+
 
     // End meme
+    // User
+
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String listUsers(Model model){
+        model.addAttribute("user", new User());
+        model.addAttribute("listUsers", this.userService.listUsers());
+
+        return "users";
+    }
+
+    @RequestMapping(value = "/users/add", method = RequestMethod.POST)
+    public String addUser(@ModelAttribute("user") User user){
+        if (user.getId() == null){
+            this.userService.save(user);
+        } else {
+            this.userService.updateUser(user);
+        }
+
+        return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/u/remove/{id}")
+    public String removeUser(@PathVariable(value = "id") long id){
+        this.userService.removeUser(id);
+
+        return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/u/edit/{id}")
+    public String editUser(@PathVariable(value = "id") long id, Model model){
+        model.addAttribute("user", this.userService.getUserById(id));
+        model.addAttribute("listUsers", this.userService.listUsers());
+
+        return "users";
+    }
+
+
+    // End user
+
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model){
+
         model.addAttribute("userForm", new User());
 
         return "registration";
@@ -121,6 +168,7 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model){
+        model.addAttribute("listMemes", this.memeService.listMemes());
         return "welcome";
     }
 

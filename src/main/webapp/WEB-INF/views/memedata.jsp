@@ -62,7 +62,7 @@
         <td>${meme.id}</td>
         <td>${meme.memeTitle}</td>
         <td>${meme.memeAuthor}</td>
-        <td>${meme.memePrice/100}${meme.memePrice%100}</td>
+        <td>${meme.memePrice}</td>
     </tr>
 </table>
 </body>

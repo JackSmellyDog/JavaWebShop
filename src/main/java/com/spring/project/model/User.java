@@ -75,6 +75,15 @@ public class User {
         return roles;
     }
 
+    public boolean isAdmin(){
+        for (Role role : roles){
+            if (role.getId() == 2){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }

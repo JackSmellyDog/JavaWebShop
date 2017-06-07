@@ -28,6 +28,12 @@
     </c:if>
 </div>
 
+<div class="container">
+    <a href="/users">Edit Users</a>
+    <span> | </span>
+    <a href="/memes">Edit Memes</a>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 

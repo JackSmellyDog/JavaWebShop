@@ -10,7 +10,14 @@
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
-        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/edit/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/delete/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/memes" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/users" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/u/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/registration" access="isAnonymous()"/>
+        <intercept-url pattern="/login" access="isAnonymous()"/>
 
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
@@ -26,6 +33,7 @@
 
     <beans:bean id="userDetailsServiceImpl"
                 class="com.spring.project.service.UserDetailsServiceImpl"/>
+    <beans:bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

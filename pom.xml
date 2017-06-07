@@ -49,6 +49,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-taglibs</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>${hibernate-validator.version}</version>
@@ -97,11 +103,6 @@
       <version>${logback.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.bsg</groupId>
-      <artifactId>RestClient</artifactId>
-      <version>1.0</version>
-    </dependency>
 
   </dependencies>
   <build>
